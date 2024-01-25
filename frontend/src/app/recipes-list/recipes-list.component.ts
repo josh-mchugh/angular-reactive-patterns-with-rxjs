@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 import { DataViewModule } from 'primeng/dataview';
 import { RatingModule } from 'primeng/rating';
@@ -10,28 +11,22 @@ import { RecipesService } from '../core/services/recipes.service';
 @Component({
   selector: 'app-recipes-list',
   standalone: true,
-  imports: [ButtonModule, DataViewModule, FormsModule, RatingModule],
+  imports: [
+    ButtonModule,
+    CommonModule,
+    DataViewModule,
+    FormsModule,
+    RatingModule
+  ],
   templateUrl: './recipes-list.component.html',
   styleUrl: './recipes-list.component.scss'
 })
-export class RecipesListComponent implements OnInit, OnDestroy {
-  recipes!: Recipe[];
-  destroy$ = new Subject<void>();
+export class RecipesListComponent implements OnInit {
+  recipes$!: Observable<Recipe[]>;
 
   constructor(private service: RecipesService) {}
 
   ngOnInit(): void {
-    this.service.getRecipes()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe(result => {
-        this.recipes = result;
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    this.recipes$ = this.service.getRecipes();
   }
 }
