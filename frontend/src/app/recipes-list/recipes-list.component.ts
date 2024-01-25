@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -21,12 +21,10 @@ import { RecipesService } from '../core/services/recipes.service';
   templateUrl: './recipes-list.component.html',
   styleUrl: './recipes-list.component.scss'
 })
-export class RecipesListComponent implements OnInit {
-  recipes$!: Observable<Recipe[]>;
+export class RecipesListComponent {
+  recipes$: Observable<Recipe[]>;
 
-  constructor(private service: RecipesService) {}
-
-  ngOnInit(): void {
+  constructor(private service: RecipesService) {
     this.recipes$ = this.service.getRecipes();
   }
 }
