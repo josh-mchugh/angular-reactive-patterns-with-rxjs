@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Observable, from } from 'rxjs';
-import { map, retryWhen, tap } from 'rxjs/operators';
+import { Observable, from, timer } from 'rxjs';
+import { delayWhen, map, retryWhen, tap } from 'rxjs/operators';
 import { ButtonModule } from 'primeng/button';
 import { DataViewModule } from 'primeng/dataview';
 import { RatingModule } from 'primeng/rating';
@@ -30,7 +30,7 @@ export class RecipesListComponent {
   constructor(private service: RecipesService) {
     this.recipes$ = this.service.getRecipes();
 
-    // Chapter 5 - Retry When Example
+    // Chapter 5 - retryWhen with delayWhen example
     const stream$ = from(['5', '10', '6', 'Hello', '2']);
     stream$.pipe(
       map((value) => {
@@ -41,9 +41,10 @@ export class RecipesListComponent {
       }),
       retryWhen((errors) => {
         return errors.pipe(
+          delayWhen(() => timer(5000)),
           tap(() => console.log('Retrying the source Observable...'))
-        )
-      })
+        );
+      }),
     )
       .subscribe({
         next: (res) => console.log('Value Emitted: ', res),
