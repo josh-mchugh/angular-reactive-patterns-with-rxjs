@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Observable, from, throwError } from 'rxjs';
-import { catchError, map, retry } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
+import { map, retryWhen, tap } from 'rxjs/operators';
 import { ButtonModule } from 'primeng/button';
 import { DataViewModule } from 'primeng/dataview';
 import { RatingModule } from 'primeng/rating';
@@ -30,7 +30,7 @@ export class RecipesListComponent {
   constructor(private service: RecipesService) {
     this.recipes$ = this.service.getRecipes();
 
-    // Chapter 5 - The Rethrow Strategy
+    // Chapter 5 - Retry When Example
     const stream$ = from(['5', '10', '6', 'Hello', '2']);
     stream$.pipe(
       map((value) => {
@@ -39,10 +39,10 @@ export class RecipesListComponent {
         }
         return parseInt(value);
       }),
-      retry(2),
-      catchError((error) => {
-        console.log('Caught Error:', error);
-        return throwError(() => error);
+      retryWhen((errors) => {
+        return errors.pipe(
+          tap(() => console.log('Retrying the source Observable...'))
+        )
       })
     )
       .subscribe({
