@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable, from, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, retry } from 'rxjs/operators';
 import { ButtonModule } from 'primeng/button';
 import { DataViewModule } from 'primeng/dataview';
 import { RatingModule } from 'primeng/rating';
@@ -39,6 +39,7 @@ export class RecipesListComponent {
         }
         return parseInt(value);
       }),
+      retry(2),
       catchError((error) => {
         console.log('Caught Error:', error);
         return throwError(() => error);
