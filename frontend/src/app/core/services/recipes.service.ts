@@ -8,9 +8,15 @@ import { Recipe } from '../model/recipe.model';
 })
 export class RecipesService {
 
+  nameFilter: string = '';
+
   constructor(private http: HttpClient) { }
 
   getRecipes(): Observable<Recipe[]> {
     return this.http.get<Recipe[]>('/recipes');
+  }
+
+  setNameFilter(value: string): void {
+    this.nameFilter = value;
   }
 }

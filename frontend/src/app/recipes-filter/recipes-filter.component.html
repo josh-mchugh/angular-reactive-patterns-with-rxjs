@@ -2,9 +2,6 @@
   <form [formGroup]="recipeForm">
     <fieldset class="rp-filter-group">
       <legend>Filters</legend>
-      <div class="rp-filter-button">
-        <p-button (onClick)="clearFilter()" label="Clear all"></p-button>
-      </div>
       <label for="title">Keyword:</label>
       <input type="text" id="title" formControlName="title"/>
       <div class="rp-filter-button">
