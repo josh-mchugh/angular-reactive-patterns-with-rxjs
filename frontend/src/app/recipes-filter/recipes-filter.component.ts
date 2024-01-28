@@ -13,14 +13,12 @@ import { RecipesService } from '../core/services/recipes.service';
 export class RecipesFilterComponent {
 
   recipeForm = this.fb.group({
-    title: ['Lemon']
+    title: ['']
   });
 
-  constructor(private service: RecipesService, private fb: FormBuilder) {
-    this.filterResults();
-  }
+  constructor(private service: RecipesService, private fb: FormBuilder) {}
 
   public filterResults(): void {
-    this.service.setNameFilter(this.recipeForm.value.title ?? '');
+    this.service.updateFilter(this.recipeForm.value.title ?? '');
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Recipe } from '../model/recipe.model';
 
 @Injectable({
@@ -8,15 +8,19 @@ import { Recipe } from '../model/recipe.model';
 })
 export class RecipesService {
 
-  nameFilter: string = '';
+  private filterTitleSubject = new BehaviorSubject<string>('');
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getRecipes(): Observable<Recipe[]> {
     return this.http.get<Recipe[]>('/recipes');
   }
 
-  setNameFilter(value: string): void {
-    this.nameFilter = value;
+  getFilterObservable(): Observable<string> {
+    return this.filterTitleSubject.asObservable();
+  }
+
+  updateFilter(value: string): void {
+    this.filterTitleSubject.next(value);
   }
 }
