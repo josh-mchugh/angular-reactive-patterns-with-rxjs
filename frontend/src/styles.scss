@@ -23,6 +23,16 @@ input {
   margin-bottom: 25px;
 }
 
+textarea {
+  width: 100%;
+}
+
+h1 {
+  margin-left: 210px !important;
+  font-size: 1.5rem !important;
+  margin-top: 10px !important;
+}
+
 /* HEADER */
 
 .header {
@@ -54,6 +64,7 @@ input {
 }
 
 /* Content */
+
 .row {
   width: 100%;
   display: flex;
@@ -62,6 +73,10 @@ input {
 }
 
 /* Grid & Grid Item */
+
+.rp-data-view {
+  min-width: 500px;
+}
 
 .recipe-rating .p-rating .p-rating-icon.pi-star {
   color: #f71e68;
@@ -79,13 +94,21 @@ input {
 }
 
 /* Filter */
+
+.rp-filters {
+  width: 245px;
+  padding: 32px;
+  left: 32px;
+}
+
 .rp-filters-group {
   height: 600px;
   width: 180px;
-  border-color: #dee2e6;
+  border-color: #dee2e6 !important;
 }
 
-.rp-filter-button button.p-button, rp-filter-button .p-button:enabled:active {
+.rp-filter-button button.p-button,
+.rp-filter-button .p-button:enabled:active {
   background: #f71e68;
   border-collapse: #f71e68;
   padding: 2.5px !important;
@@ -95,4 +118,51 @@ input {
 
 .rp-filter-button {
   height: 50px;
+}
+
+/* Recipe Create Form */
+
+app-recipe-creation form {
+  padding: 0px 25px 2px 25px;
+  margin-left: 210px;
+  width: 1000px;
+  border: 1px solid lightgray;
+}
+
+.column {
+  float: left;
+  width: 33%;
+}
+
+.column-middle {
+  float: left;
+  width: 50%;
+}
+
+.column-full {
+  float: left;
+  width: 100%;
+}
+
+app-recipe-creation input,
+app-recipe-creation label {
+  display: block;
+  width: 100%;
+}
+
+.recipe-tag {
+  display: initial;
+  padding-left: 10px;
+}
+
+.right-action-panel {
+  margin-left: 1050px;
+  margin-top: 4px;
+}
+
+.recipe-button button.p-button,
+.recipe-button p.button:enabled:active {
+  background: #f71e68 !important;
+  border-color: #f71e68 !important;
+  margin: 5px !important;
 }
